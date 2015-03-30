@@ -1,32 +1,44 @@
 
 " ------------------------------ Basic Options ------------------------------
 
-set number numberwidth=3 " Sets the line number and its width
+set nocompatible               " be iMproved, required
 
-set encoding=utf-8       " encoding is utf 8
+set encoding=utf-8             " encoding is utf 8
 set fileencoding=utf-8
 
-set expandtab            " use spaces instead of tabs
-set autoindent           " autoindent based on line above, works most of the time
-set tabstop=2            " 2 spaces for tabs
-set shiftwidth=2         " 2 spaces for indentation
-set softtabstop=2        " 2 spaces for tabs/backspaces
-set cindent              " turns on C style indentation
+set number numberwidth=3       " Sets the line number and its width
 
-set scrolloff=5          " keep the cursor visible within 5 lines when scrolling
-set textwidth=100        " no lines longer than 100 cols
+set expandtab                  " use spaces instead of tabs
+set autoindent                 " autoindent based on line above, works most of the time
+set copyindent                 " copy the previous indentation on autoindenting
+set shiftround                 " use multiple of shiftwidth when indenting with '<' and '>'
+set tabstop=2                  " 2 spaces for tabs
+set shiftwidth=2               " 2 spaces for indentation
+set softtabstop=2              " 2 spaces for tabs/backspaces
+set showmatch                  " set show matching parenthesis
+set cindent                    " turns on C style indentation
+set backspace=indent,eol,start " allow backspacing over everything in insert mode
+set scrolloff=5                " keep the cursor visible within 5 lines when scrolling
+set textwidth=100              " no lines longer than 100 cols
 
-set cursorline           " highlight current line
+set cursorline                 " highlight current line
 hi CursorLine term=bold cterm=bold guibg=Grey30
 
-set incsearch            " perform the search as the characters are typed
-set hlsearch             " hightlight search string
-set ignorecase           " Case insensitive search
+set incsearch                  " perform the search as the characters are typed
+set hlsearch                   " hightlight search string
+set ignorecase                 " Case insensitive search
 set smartcase
 
-set noswapfile           " disable swp files from being created
-set nobackup             " disable tilde backup files from being created
-set nowrap               " No wrapping
+set noswapfile                 " disable swp files from being created
+set nobackup                   " disable tilde backup files from being created
+set nowrap                     " No wrapping
+set hidden                     " Hides buffers instead of closing them
+set history=1000               " remember more commands and search history
+set undolevels=1000            " use many muchos levels of undo
+set title                      " change the terminal's title
+set wildignore=*.swp,*.bak,*.pyc,*.class
+set pastetoggle=<F2>           " Toggles pastemode with F2
+
 
 " ------------------------------ Key Mappings ------------------------------
 
@@ -61,6 +73,25 @@ set nowrap               " No wrapping
 :nnoremap s <nop>
 :nnoremap <leader>sv :source $MYVIMRC<cr>
 
+" Quicker window movement
+nnoremap <leader>j <C-w><C-j>
+nnoremap <leader>k <C-w><C-k>
+nnoremap <leader>h <C-w><C-h>
+nnoremap <leader>l <C-w><C-l>
+
+" Jumps to the next line directly when there is a long line with linewrap enabled
+nnoremap j gj
+nnoremap k gk
+
+" Prevents long shift press while saving. Just checking out the experience. May fallback to usual vim-style
+nnoremap ; :
+
+" nop the arrow keys. Just checking out whether I can stay away from arrow-keys (The VIM way). May revert it
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
 
 " autocommands
 
@@ -70,18 +101,21 @@ set nowrap               " No wrapping
 " Remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
 
+" Save on focus/tabbed out. Might be reverted
+autocmd FocusLost * :wa
+
 
 " some abbreviations in insert mode
 
 iabbrev adn and
 iabbrev waht what
 iabbrev tehn then
+iabbrev teh the
 
 
 " ------------------------------  Plugin Configurations ------------------------------
 
 
-set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -130,9 +164,17 @@ Plugin 'Shutnik/jshint2.vim'
 
 " Tree explorer
 Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
 
 " Git wrapper
 Plugin 'tpope/vim-fugitive'
+
+" Js beautify
+Plugin 'maksimr/vim-jsbeautify'
+Plugin 'einars/js-beautify'
+
+" Toggle comments
+Plugin 'scrooloose/nerdcommenter'
 
 
 " All of your Plugins must be added before the following line
@@ -157,14 +199,23 @@ map <C-n> :NERDTreeToggle<CR>
 " Color scheme for Nerdtree
 :hi Directory guifg=#FF0000 ctermfg=red
 
-" closes vim when all tabs are closed
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" maksimr/vim-jsbeautify config options
+
+autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+" for html
+autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+" for css or scss
+autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+
+autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
+autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
+autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
 
 
 " syntax highlighting
 set background=dark      " you can use `dark` or `light` as your background
-syntax on
 set t_Co=256
-color solarized
-
+syntax on
+color mango
 
