@@ -1,13 +1,7 @@
 
 " ------------------------------ Basic Options ------------------------------
 
-" syntax highlighting
-set background=dark      " you can use `dark` or `light` as your background
-syntax on
-color mango
-
 set number numberwidth=3 " Sets the line number and its width
-
 
 set encoding=utf-8       " encoding is utf 8
 set fileencoding=utf-8
@@ -23,7 +17,7 @@ set scrolloff=5          " keep the cursor visible within 5 lines when scrolling
 set textwidth=100        " no lines longer than 100 cols
 
 set cursorline           " highlight current line
-hi CursorLine term=bold cterm=bold guibg=Grey15
+hi CursorLine term=bold cterm=bold guibg=Grey30
 
 set incsearch            " perform the search as the characters are typed
 set hlsearch             " hightlight search string
@@ -32,6 +26,7 @@ set smartcase
 
 set noswapfile           " disable swp files from being created
 set nobackup             " disable tilde backup files from being created
+set nowrap               " No wrapping
 
 " ------------------------------ Key Mappings ------------------------------
 
@@ -139,7 +134,37 @@ Plugin 'scrooloose/nerdtree'
 " Git wrapper
 Plugin 'tpope/vim-fugitive'
 
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+
+" wincent/command-t config options
+
+" sets the root path as current working directory
+let g:CommandTTraverseSCM='pwd'
+
+" scrooloose/nerdtree plugin options
+
+" open a NERDTree automatically when vim starts up if no files were specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" toggle nerd tree with Ctrl-n
+map <C-n> :NERDTreeToggle<CR>
+
+" Color scheme for Nerdtree
+:hi Directory guifg=#FF0000 ctermfg=red
+
+" closes vim when all tabs are closed
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+
+" syntax highlighting
+set background=dark      " you can use `dark` or `light` as your background
+syntax on
+set t_Co=256
+color solarized
+
 
