@@ -19,7 +19,7 @@ set showmatch                  " set show matching parenthesis
 set cindent                    " turns on C style indentation
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set scrolloff=5                " keep the cursor visible within 5 lines when scrolling
-set textwidth=100              " no lines longer than 100 cols
+set textwidth=150              " no lines longer than 100 cols
 
 set cursorline                 " highlight current line
 hi CursorLine term=bold cterm=bold guibg=Grey30
@@ -176,6 +176,11 @@ Plugin 'einars/js-beautify'
 " Toggle comments
 Plugin 'scrooloose/nerdcommenter'
 
+" Auto closing html tags
+Plugin 'docunext/closetag.vim'
+
+Plugin 'Raimondi/delimitMate'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -199,6 +204,11 @@ map <C-n> :NERDTreeToggle<CR>
 " Color scheme for Nerdtree
 :hi Directory guifg=#FF0000 ctermfg=red
 
+" NerdTree tabs configs
+let g:nerdtree_tabs_focus_on_files=1
+let g:nerdtree_tabs_autofind=1
+let g:nerdtree_tabs_open_on_new_tab=0
+
 
 " maksimr/vim-jsbeautify config options
 
@@ -212,10 +222,11 @@ autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
 autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
 autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
 
+set guifont=Menlo\ Regular:h14
 
 " syntax highlighting
-set background=dark      " you can use `dark` or `light` as your background
-set t_Co=256
-syntax on
-color mango
+syntax enable
+set background=dark
+let g:solarized_termcolors=256  "Use Solarized palette in Terminal mode
+colorscheme solarized
 
