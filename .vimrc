@@ -181,6 +181,16 @@ Plugin 'docunext/closetag.vim'
 
 Plugin 'Raimondi/delimitMate'
 
+" Autocomplete plugin. After Vundle installation, follow the steps below
+" brew install cmake
+" cd ~/.vim/bundle/YouCompleteMe && ./install.sh
+
+Plugin 'Valloric/YouCompleteMe'
+
+" Autocomplete plugin. After Vundle installation follow the steps below
+" cd ~/.vim/bundle/tern_for_vim && npm install
+Plugin 'marijnh/tern_for_vim'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -221,6 +231,9 @@ autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
 autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
 autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
+
+" See more at: https://docs.oseems.com/general/application/vim/auto-complete-javascript#sthash.Hzr6fI7u.dpuf
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
 set guifont=Menlo\ Regular:h14
 
